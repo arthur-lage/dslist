@@ -8,15 +8,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.arthur.dslist.dto.GameListDTO;
+import com.arthur.dslist.dto.GameMinDTO;
 import com.arthur.dslist.services.GameListService;
+import com.arthur.dslist.services.GameService;
 
 @RestController
 @RequestMapping("/api/lists")
 public class GameListController {
   private final GameListService gameListService;
+  private final GameService gameService;
 
-  public GameListController(GameListService gameListService) {
+  public GameListController(GameListService gameListService, GameService gameService) {
     this.gameListService = gameListService;
+    this.gameService = gameService;
   }
 
   @GetMapping
@@ -24,8 +28,8 @@ public class GameListController {
     return this.gameListService.findAll();
   }
 
-  @GetMapping("/{id}")
-  public GameListDTO findById(@PathVariable Long id) {
-    return this.gameListService.findById(id);
+  @GetMapping("/{listId}/games")
+  public List<GameMinDTO> findByList(@PathVariable Long listId) {
+    return this.gameService.findByList(listId);
   }
 }
