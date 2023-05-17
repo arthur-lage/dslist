@@ -20,10 +20,4 @@ public class GameListService {
   public List<GameListDTO> findAll() {
     return this.gameListRepository.findAll().stream().map(GameListDTO::new).toList();
   }
-
-  @Transactional(readOnly = true)
-  public GameListDTO findById(Long id) {
-    var gameList = this.gameListRepository.findById(id).orElseThrow(RuntimeException::new);
-    return new GameListDTO(gameList);
-  }
 }
